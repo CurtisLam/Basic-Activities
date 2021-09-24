@@ -3,6 +3,7 @@ package edu.temple.basicactivities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +20,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+        /*
+         * Data saved in your implementation of onSavedInstanceState() can be retrieved here
+         * or in onRestoreInstanceState(). Note that the bundle object can be null in onCreate()
+         * but will never be null on onRestoreInstnaceState()
+         */
+        if (savedInstanceState != null) {
+            // Retrieve previously saved state information
+        } else {
+            // Initialize state data with default values
+        }
 
         val secondActivityIntent = Intent(this, SecondActivity::class.java)
 
@@ -27,6 +38,21 @@ class MainActivity : AppCompatActivity() {
 
         // Launch expecting returned data
         findViewById<Button>(R.id.launchForResultButton).setOnClickListener{secondActivityLauncher.launch(secondActivityIntent)}
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Overriding onRestoreInstanceState() allows you to separate your "initialization" code
+        // from your "restoration" code.
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // This method is used to persist state data before the activity is destroyed by Android,
+        // allowing it to be retrieved when the activity is recreated.
+        // Please items in the Bundle argument and they will be returned when onCreate() and
+        // onRestoreInstanceState() are called.
+        //
     }
 
     override fun onStart() {
